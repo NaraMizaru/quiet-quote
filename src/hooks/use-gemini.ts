@@ -1,6 +1,7 @@
 import type {GenerateOptions} from "../types/gemini";
 import {useState} from "react";
 import {geminiModel} from "../lib/gemini";
+import {themeContext, toneContext} from "../lib/prompt-context.ts";
 
 const useGemini = () => {
     const [result, setResult] = useState<string>("");
@@ -12,12 +13,28 @@ const useGemini = () => {
         setError(null);
         setResult("");
 
+
         const prompt = `
-            Generate a short inspirational quote.
-            Language: ${language === "id" ? "Indonesian" : "English"}
-            Theme: ${theme}
-            Tone: ${tone}
-            Length: 1–2 sentences.
+            You are a thoughtful quote writer.
+            
+            Write a short, original quote meant to be saved and reread.
+            Avoid clichés and motivational language.
+            The quote should feel human, reflective, and emotionally grounded.
+            
+            Context:
+            - Language: ${language === "id" ? "Indonesian" : "English"}
+            - Theme focus: ${themeContext[theme] ?? theme}
+            - Emotional tone: ${toneContext[tone] ?? tone}
+            
+            Rules:
+            - Length: 1–2 sentences
+            - No emojis
+            - No hashtags
+            - No quotation marks
+            - Not poetic or rhyming
+            - No explanations or introductions
+            
+            Output only the quote text.
         `;
 
         try {

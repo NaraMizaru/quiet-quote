@@ -1,17 +1,18 @@
-import {languages, themes, tones} from "../lib/options.ts";
+import {type Language, languages, type Theme, themes, type Tone, tones} from "../lib/options.ts";
 import {useState} from "react";
 import useGemini from "../hooks/use-gemini.ts";
 import type {Quote} from "../types/quote";
 
 type Mode = "ai" | "manual";
+
 type QuoteGeneratorProps = {
     onSave: (quote: Quote) => void;
 }
 
 const QuoteGenerator = ({onSave}: QuoteGeneratorProps) => {
-    const [theme, setTheme] = useState<string>("life");
-    const [tone, setTone] = useState<string>("calm");
-    const [language, setLanguage] = useState<string>("en");
+    const [theme, setTheme] = useState<Theme>("life");
+    const [tone, setTone] = useState<Tone>("calm");
+    const [language, setLanguage] = useState<Language>("en");
 
     const [mode, setMode] = useState<Mode>("ai");
     const [manualText, setManualText] = useState("");
@@ -27,7 +28,7 @@ const QuoteGenerator = ({onSave}: QuoteGeneratorProps) => {
             text,
             theme,
             tone,
-            language: language as "en" | "id",
+            language: language as Language,
             source: mode,
             created_at: Date.now(),
         }
@@ -74,7 +75,7 @@ const QuoteGenerator = ({onSave}: QuoteGeneratorProps) => {
                 <div className="grid gap-4 sm:grid-cols-3">
                     <select
                         value={theme}
-                        onChange={(e) => setTheme(e.target.value)}
+                        onChange={(e) => setTheme(e.target.value as Theme)}
                         className="rounded-lg border px-3 py-2 text-sm cursor-pointer"
                     >
                         {themes.map((item) => (
@@ -86,7 +87,7 @@ const QuoteGenerator = ({onSave}: QuoteGeneratorProps) => {
 
                     <select
                         value={tone}
-                        onChange={(e) => setTone(e.target.value)}
+                        onChange={(e) => setTone(e.target.value as Tone)}
                         className="rounded-lg border px-3 py-2 text-sm cursor-pointer"
                     >
                         {tones.map((item) => (
@@ -98,7 +99,7 @@ const QuoteGenerator = ({onSave}: QuoteGeneratorProps) => {
 
                     <select
                         value={language}
-                        onChange={(e) => setLanguage(e.target.value as "en" | "id")}
+                        onChange={(e) => setLanguage(e.target.value as Language)}
                         className="rounded-lg border px-3 py-2 text-sm cursor-pointer"
                     >
                         {languages.map((item) => (
@@ -125,7 +126,7 @@ const QuoteGenerator = ({onSave}: QuoteGeneratorProps) => {
                             <button
                                 onClick={() => {
                                     generate({
-                                        language: language as "en" | "id",
+                                        language: language as Language,
                                         theme,
                                         tone,
                                     })
