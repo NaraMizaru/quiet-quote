@@ -5,5 +5,5 @@ export interface Quote {
     tone: string;
     language: "en" | "id";
     source: "manual" | "ai";
-    created_at: string;
+    created_at: number;
 }
