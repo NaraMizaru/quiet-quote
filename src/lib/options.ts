@@ -10,6 +10,7 @@ export const themes: Options[] = [
     {value: "discipline", label: "Discipline"},
     {value: "coding", label: "Coding"},
     {value: "confused", label: "Confused"},
+    {value: "relationship", label: "Relationship"},
 ]
 
 export const tones: Options[] = [
